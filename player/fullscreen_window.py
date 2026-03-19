@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from PyQt6.QtWidgets import QWidget, QLabel
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer
+from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import QKeyEvent, QMouseEvent
+from PyQt6.QtWidgets import QLabel, QWidget
 
 
 class FullscreenWindow(QWidget):

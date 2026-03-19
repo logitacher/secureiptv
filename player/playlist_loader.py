@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-import ssl
 import logging
-import urllib.request
+import ssl
 import urllib.error
+import urllib.request
 from urllib.parse import urlparse
+
 from PyQt6.QtCore import QThread, pyqtSignal
-from player.m3u_parser import Channel, parse_m3u, _parse_lines
+
+from player.m3u_parser import Channel, _parse_lines, parse_m3u
 
 logger     = logging.getLogger(__name__)
 _CHUNK     = 131_072
@@ -58,7 +60,7 @@ class PlaylistLoader(QThread):
         if parsed.scheme.lower() not in ("http", "https"):
             raise ValueError(
                 "Only http/https is allowed for remote playlists "
-                "(got '{}').".format(parsed.scheme)
+                f"(got '{parsed.scheme}')."
             )
         ctx = ssl.create_default_context()
         if not self._verify_ssl:

@@ -3,21 +3,36 @@
 from __future__ import annotations
 
 import logging
-from PyQt6.QtWidgets import (
-    QMainWindow, QWidget, QSplitter, QVBoxLayout, QHBoxLayout,
-    QPushButton, QLabel, QFileDialog, QStatusBar, QLineEdit,
-    QTabWidget, QDialog, QDialogButtonBox, QFormLayout,
-    QProgressBar, QCheckBox, QMessageBox, QApplication,
-)
+
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QKeySequence, QShortcut
+from PyQt6.QtWidgets import (
+    QApplication,
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QFileDialog,
+    QFormLayout,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QMessageBox,
+    QProgressBar,
+    QPushButton,
+    QSplitter,
+    QStatusBar,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
 
 from player.category_tab import CategoryTab
-from player.vlc_player import VLCPlayer
-from player.seek_slider import SeekSlider
 from player.fullscreen_window import FullscreenWindow
-from player.m3u_parser import Channel, CATEGORY_LIVE, CATEGORY_MOVIES, CATEGORY_SERIES
+from player.m3u_parser import CATEGORY_LIVE, CATEGORY_MOVIES, CATEGORY_SERIES, Channel
 from player.playlist_loader import PlaylistLoader
+from player.seek_slider import SeekSlider
+from player.vlc_player import VLCPlayer
 
 logger      = logging.getLogger(__name__)
 _CATEGORIES = [CATEGORY_LIVE, CATEGORY_MOVIES, CATEGORY_SERIES]
@@ -114,7 +129,7 @@ class MainWindow(QMainWindow):
         for cat in _CATEGORIES:
             tab = CategoryTab()
             tab.channel_selected.connect(self._on_channel_selected)
-            self._tabs.addTab(tab, "{} {}".format(_ICONS[cat], cat))
+            self._tabs.addTab(tab, f"{_ICONS[cat]} {cat}")
             self._cat_tabs[cat] = tab
         # Load a tab on demand if the user switches before lazy loading finishes
         self._tabs.currentChanged.connect(self._on_tab_switched)
@@ -287,7 +302,7 @@ class MainWindow(QMainWindow):
             self._dl_bar.setRange(0, 100)
             self._dl_bar.setValue(pct)
             self._status.showMessage(
-                "Parsing..." if pct >= 90 else "Downloading... {}%".format(pct)
+                "Parsing..." if pct >= 90 else f"Downloading... {pct}%"
             )
 
     def _on_load_finished(self, channels: list[Channel]) -> None:
@@ -297,12 +312,7 @@ class MainWindow(QMainWindow):
         self._distribute_channels()
         counts = {c: len(self._dist_buckets.get(c, [])) for c in _CATEGORIES}
         self._status.showMessage(
-            "Loaded {:,} channels - 📺 {:,}  🎬 {:,}  🎞️ {:,}".format(
-                len(channels),
-                counts[CATEGORY_LIVE],
-                counts[CATEGORY_MOVIES],
-                counts[CATEGORY_SERIES],
-            )
+            f"Loaded {len(channels):,} channels - 📺 {counts[CATEGORY_LIVE]:,}  🎬 {counts[CATEGORY_MOVIES]:,}  🎞️ {counts[CATEGORY_SERIES]:,}"
         )
 
     def _on_load_error(self, message: str) -> None:
@@ -339,7 +349,7 @@ class MainWindow(QMainWindow):
         # Update tab labels immediately (no channel data needed)
         for i, cat in enumerate(_CATEGORIES):
             self._tabs.setTabText(
-                i, "{}  {}  ({:,})".format(_ICONS[cat], cat, len(buckets[cat]))
+                i, f"{_ICONS[cat]}  {cat}  ({len(buckets[cat]):,})"
             )
 
         # Load the active tab now so the user sees data immediately
@@ -393,7 +403,7 @@ class MainWindow(QMainWindow):
 
     def _on_channel_selected(self, url: str, name: str) -> None:
         self.player.play(url)
-        self.setWindowTitle("SecureIPTV - {}".format(name))
+        self.setWindowTitle(f"SecureIPTV - {name}")
         self.btn_play.setText("⏸")
 
     def _refresh_controls(self) -> None:

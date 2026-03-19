@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """SecureIPTV - entry point and application stylesheet."""
 
-import sys
 import logging
+import sys
+
 from PyQt6.QtWidgets import QApplication
+
 from player.main_window import MainWindow
 
 _STYLESHEET = """

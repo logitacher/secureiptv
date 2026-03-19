@@ -1,9 +1,13 @@
 """Unit tests for the M3U parser (no Qt or VLC required)."""
 
 import pytest
+
 from player.m3u_parser import (
-    _parse_lines, _is_safe_url,
-    CATEGORY_LIVE, CATEGORY_MOVIES, CATEGORY_SERIES,
+    CATEGORY_LIVE,
+    CATEGORY_MOVIES,
+    CATEGORY_SERIES,
+    _is_safe_url,
+    _parse_lines,
 )
 
 
@@ -77,7 +81,7 @@ def test_name_truncated():
 def test_group_truncated():
     long_group = "G" * 500
     lines = _make_m3u((
-        '#EXTINF:-1 group-title="{}",Chan'.format(long_group),
+        f'#EXTINF:-1 group-title="{long_group}",Chan',
         "http://example.com/s",
     ))
     assert len(_parse_lines(lines)[0].group) == 128

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from PyQt6.QtCore import QModelIndex, Qt, pyqtSignal
 from PyQt6.QtWidgets import QListView
-from PyQt6.QtCore import pyqtSignal, QModelIndex, Qt
+
 from player.channel_model import ChannelModel
 from player.m3u_parser import Channel
 

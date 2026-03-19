@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from PyQt6.QtCore import QAbstractListModel, QModelIndex, Qt
+
 from player.m3u_parser import Channel
 
 
@@ -19,7 +20,7 @@ class ChannelModel(QAbstractListModel):
             return None
         ch = self._channels[index.row()]
         if role == Qt.ItemDataRole.DisplayRole:
-            return "[{}]  {}".format(ch.group, ch.name) if ch.group else ch.name
+            return f"[{ch.group}]  {ch.name}" if ch.group else ch.name
         if role == Qt.ItemDataRole.UserRole:
             return ch
         return None

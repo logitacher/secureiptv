@@ -7,11 +7,16 @@ how many groups or channels exist.
 
 from __future__ import annotations
 
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QSplitter, QListView
 from PyQt6.QtCore import (
-    Qt, QTimer, pyqtSignal,
-    QAbstractListModel, QModelIndex, QItemSelectionModel,
+    QAbstractListModel,
+    QItemSelectionModel,
+    QModelIndex,
+    Qt,
+    QTimer,
+    pyqtSignal,
 )
+from PyQt6.QtWidgets import QHBoxLayout, QListView, QSplitter, QWidget
+
 from player.channel_list import ChannelListWidget
 from player.m3u_parser import Channel
 

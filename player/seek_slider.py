@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from PyQt6.QtWidgets import QSlider, QStyle
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QMouseEvent
+from PyQt6.QtWidgets import QSlider, QStyle
 
 
 class SeekSlider(QSlider):

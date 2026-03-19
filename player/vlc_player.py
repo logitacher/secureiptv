@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import sys
 import logging
+import sys
+
 import vlc
 from PyQt6.QtWidgets import QFrame, QSizePolicy
 
@@ -68,10 +69,7 @@ class VLCPlayer(QFrame):
         return pos if pos >= 0 else 0.0
 
     def get_time_string(self) -> str:
-        return "{} / {}".format(
-            _fmt_ms(self._player.get_time()),
-            _fmt_ms(self._player.get_length()),
-        )
+        return f"{_fmt_ms(self._player.get_time())} / {_fmt_ms(self._player.get_length())}"
 
     def closeEvent(self, event) -> None:
         self._player.stop()
@@ -82,4 +80,4 @@ def _fmt_ms(ms: int) -> str:
     if ms <= 0:
         return "--:--"
     s = ms // 1000
-    return "{:02d}:{:02d}".format(s // 60, s % 60)
+    return f"{s // 60:02d}:{s % 60:02d}"
