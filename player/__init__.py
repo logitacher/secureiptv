@@ -1,0 +1,1 @@
+"""SecureIPTV player package."""
